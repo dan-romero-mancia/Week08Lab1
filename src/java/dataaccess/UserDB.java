@@ -34,6 +34,8 @@ public class UserDB {
         } catch (SQLException ex) {
             Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        return 0;
     }
 
     public int update(User user) throws NotesDBException {
