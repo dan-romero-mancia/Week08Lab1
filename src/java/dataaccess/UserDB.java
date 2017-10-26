@@ -13,9 +13,10 @@ import java.util.logging.Logger;
 public class UserDB {
 
     public int insert(User user) throws NotesDBException {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        int i = 0;
         try {
-            ConnectionPool pool = ConnectionPool.getInstance();
-            Connection connection = pool.getConnection();
             String preparedQuery = "INSERT INTO User" + "(username,password,email,active,firstname,lastname" + "VALUES " + "(?, ?, ?)";
             PreparedStatement ps = connection.prepareStatement(preparedQuery);
             ps.setString(1,user.getUsername());
@@ -24,18 +25,19 @@ public class UserDB {
             ps.setInt(4,user.getActive());
             ps.setString(5,user.getFirstname());
             ps.setString(6,user.getLastname());
-            int i = ps.executeUpdate();
-            if (i>0) {
-                return 1;
-            }
-            else {
-                return 0;
-            }
+            i = ps.executeUpdate();
+           
         } catch (SQLException ex) {
             Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        return 0;
+         if (i>0) {
+             pool.freeConnection(connection);
+                return 1;
+            }
+            else {
+             pool.freeConnection(connection);
+                return 0;
+            }
     }
 
     public int update(User user) throws NotesDBException {

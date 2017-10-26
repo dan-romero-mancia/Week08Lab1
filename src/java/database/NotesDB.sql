@@ -16,4 +16,14 @@ CREATE TABLE User(
     PRIMARY KEY (username)
 );
 
+DROP TABLE Notes;
+
+CREATE TABLE Notes (
+    noteId INT NOT NULL AUTO_INCREMENT,
+    dateCreated DATETIME NOT NULL,
+    contents NVARCHAR(10000) NOT NULL,
+    PRIMARY KEY (noteId)
+);
+
+
 INSERT INTO User values('admin', 'password', 'test@test.com', 1, 'Bob', 'Bobberson');
