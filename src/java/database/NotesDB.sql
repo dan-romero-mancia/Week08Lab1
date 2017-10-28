@@ -21,7 +21,7 @@ DROP TABLE Notes;
 CREATE TABLE Notes (
     noteId INT NOT NULL AUTO_INCREMENT,
     dateCreated DATETIME NOT NULL,
-    contents NVARCHAR(10000) NOT NULL,
+    contents VARCHAR(10000) CHARACTER SET utf8 NOT NULL,
     PRIMARY KEY (noteId)
 );
 
