@@ -31,16 +31,39 @@
                         <form action="notes" method="POST" >
                             <input type="submit" value="Delete">
                             <input type="hidden" name="action" value="delete"> 
+                            <input type="hidden" name="selectedNote" value="${note.noteId}">
                         </form>
                     </td>
                     <td>
-                        <form action="notes" method="POST">
+                        <form action="notes" method="GET">
                             <input type="submit" value="Edit">
-                            <input type="hidden" name="action" value="edit">
+                            <input type="hidden" name="action" value="view">
+                            <input type="hidden" name="selectedNote" value="${note.noteId}">
                         </form>
                     </td>
                 </tr>
             </c:forEach>
         </table>
+
+        <c:if test="${selectedNote == null}">  
+            <h3>Add Note</h3>
+            <form action="notes" method="POST">
+                <input type="text" name="contents">
+                <input type="hidden" name="action" value="add">
+                <input type="submit" value="Save">
+            </form>
+        </c:if>
+
+        <c:if test="${selectedNote != null}">
+            <h3>Edit Note</h3>
+            <form action="notes" method="POST">
+                <input type="text" name="contents" value="${selectedNote.contents}">
+                <input type="hidden" name="noteId" value="${selectedNote.noteId}">
+                <input type="hidden" name="action" value="edit">
+                <input type="submit" value="Save">
+            </form>
+        </c:if>
+
+
     </body>
 </html>

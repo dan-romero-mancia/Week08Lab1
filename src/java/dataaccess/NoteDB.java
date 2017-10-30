@@ -25,7 +25,7 @@ public class NoteDB {
         Connection connection = pool.getConnection();
 
         try {
-            String preparedQuery = "INSERT INTO Note (date, contents) VALUES (?, ?)";
+            String preparedQuery = "INSERT INTO Note (dateCreated, contents) VALUES (?, ?);";
             PreparedStatement ps = connection.prepareStatement(preparedQuery);
             ps.setDate(1, new java.sql.Date(note.getDate().getTime()));
             ps.setString(2, note.getContents());
@@ -44,9 +44,7 @@ public class NoteDB {
         Connection connection = pool.getConnection();
 
         try {
-            String preparedSQL = "UPDATE Notes SET "
-                    + "contents = ?, "
-                    + "WHERE noteId = ?";
+            String preparedSQL = "UPDATE Note SET contents = ? WHERE noteId = ?;";
 
             PreparedStatement ps = connection.prepareStatement(preparedSQL);
 
@@ -71,11 +69,11 @@ public class NoteDB {
         ResultSet rs = null;
 
         try {
-            ps = connection.prepareStatement("SELECT * FROM user;");
+            ps = connection.prepareStatement("SELECT * FROM note;");
             rs = ps.executeQuery();
             List<Note> notes = new ArrayList<>();
             while (rs.next()) {
-                notes.add(new Note(rs.getInt("noteId"), rs.getDate("date"), rs.getString("contents")));
+                notes.add(new Note(rs.getInt("noteId"), rs.getDate("dateCreated"), rs.getString("contents")));
             }
             pool.freeConnection(connection);
             return notes;
@@ -96,7 +94,7 @@ public class NoteDB {
     public Note getNote(int noteId) throws NotesDBException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
-        String selectSQL = "SELECT * FROM Notes WHERE noteId = ?";
+        String selectSQL = "SELECT * FROM Note WHERE noteId = ?";
         PreparedStatement ps = null;
         ResultSet rs = null;
 
@@ -107,7 +105,7 @@ public class NoteDB {
 
             Note note = null;
             while (rs.next()) {
-                note = new Note(rs.getInt("noteId"), rs.getDate("date"), rs.getString("contents"));
+                note = new Note(rs.getInt("noteId"), rs.getDate("dateCreated"), rs.getString("contents"));
             }
             pool.freeConnection(connection);
             return note;

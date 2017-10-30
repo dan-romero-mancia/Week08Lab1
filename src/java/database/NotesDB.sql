@@ -16,9 +16,9 @@ CREATE TABLE User(
     PRIMARY KEY (username)
 );
 
-DROP TABLE Notes;
+DROP TABLE Note;
 
-CREATE TABLE Notes (
+CREATE TABLE Note (
     noteId INT NOT NULL AUTO_INCREMENT,
     dateCreated DATETIME NOT NULL,
     contents VARCHAR(10000) CHARACTER SET utf8 NOT NULL,
@@ -27,3 +27,4 @@ CREATE TABLE Notes (
 
 
 INSERT INTO User values('admin', 'password', 'test@test.com', 1, 'Bob', 'Bobberson');
+INSERT INTO Note (dateCreated, contents) values('2017-10-25 23:59:59', 'contents');
