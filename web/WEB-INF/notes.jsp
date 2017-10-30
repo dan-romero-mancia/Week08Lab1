@@ -25,7 +25,7 @@
             <c:forEach var="note" items="${noteTable}">
                 <tr>
                     <td>${note.noteId}</td>
-                    <td>${note.date}</td>
+                    <td>${note.dateCreated}</td>
                     <td>${note.contents}</td>
                     <td>
                         <form action="notes" method="POST" >

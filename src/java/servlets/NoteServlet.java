@@ -10,6 +10,7 @@ import dataaccess.NotesDBException;
 import domainmodel.Note;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -40,7 +41,7 @@ public class NoteServlet extends HttpServlet {
         }
         
         try {
-            ArrayList<Note> noteList = (ArrayList<Note>) service.getAll();
+            List<Note> noteList = service.getAll();
             request.setAttribute("noteTable", noteList);
             
         } catch (NotesDBException ex) {
@@ -61,7 +62,7 @@ public class NoteServlet extends HttpServlet {
             if (contents != null && !contents.isEmpty()) {
                 try {
                     service.insert(contents);
-                    ArrayList<Note> noteList = (ArrayList<Note>) service.getAll();
+                    List<Note> noteList = (ArrayList<Note>) service.getAll();
                     request.setAttribute("noteTable", noteList);
                 } catch (NotesDBException ex) {
                     Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -73,7 +74,7 @@ public class NoteServlet extends HttpServlet {
             String noteId = request.getParameter("selectedNote");
             try {
                 service.delete(Integer.parseInt(noteId));
-                ArrayList<Note> noteList = (ArrayList<Note>) service.getAll();
+                List<Note> noteList = (ArrayList<Note>) service.getAll();
                 request.setAttribute("noteTable", noteList);
             } catch (NotesDBException ex) {
                 Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -85,7 +86,7 @@ public class NoteServlet extends HttpServlet {
             int noteId = Integer.parseInt(request.getParameter("noteId"));
             try {
                 service.update(noteId, contents);
-                ArrayList<Note> noteList = (ArrayList<Note>) service.getAll();
+                List<Note> noteList = (ArrayList<Note>) service.getAll();
                 request.setAttribute("noteTable", noteList);
             } catch (NotesDBException ex) {
                 Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
